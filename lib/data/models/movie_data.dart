@@ -20,7 +20,7 @@ class MovieModel {
       'id': id,
       'title': title,
       'image': image,
-      'actorList': actorList?.map((x) => x.toMap())?.toList(),
+      'actorList': actorList.map((x) => x.toMap()).toList(),
     };
   }
 
