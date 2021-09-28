@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:useacademy_semana2/core/error/failures.dart';
-import 'package:useacademy_semana2/core/usecases/usecase.dart';
 import 'package:useacademy_semana2/data/models/models.dart';
 import 'package:useacademy_semana2/domain/entities/movie.dart';
 import 'package:useacademy_semana2/domain/repositories/movie_repository.dart';
@@ -44,21 +43,21 @@ void main() {
   ];
 
   test('Should get movies list from repository', () async {
-    when(mockMovieRepository.getMoviesList())
+    when(mockMovieRepository.getMoviesList(any))
         .thenAnswer((_) async => const Right(tMoviesList));
 
-    final result = await usecase(NoParams());
+    final result = await usecase(const MovieListParams(movieType: 'dramas'));
 
     expect(result, equals(const Right(tMoviesList)));
   });
 
   test('should get a failure from repository ', () async {
     // arrange
-    when(mockMovieRepository.getMoviesList())
+    when(mockMovieRepository.getMoviesList(any))
         .thenAnswer((_) async => Left(ServerFailure()));
 
     //act
-    final result = await usecase(NoParams());
+    final result = await usecase(const MovieListParams(movieType: 'dramas'));
 
     //assert
     expect(result, equals(Left(ServerFailure())));

@@ -4,6 +4,6 @@ import '../../core/error/failures.dart';
 import '../entities/movie.dart';
 
 abstract class MovieRepository {
-  Future<Either<Failure, List<Movie>>> getMoviesList();
+  Future<Either<Failure, List<Movie>>> getMoviesList(String movieType);
   Future<Either<Failure, Movie>> getMovie(String movieId);
 }
