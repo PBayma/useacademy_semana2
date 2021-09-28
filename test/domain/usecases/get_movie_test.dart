@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:useacademy_semana2/core/error/failures.dart';
+import 'package:useacademy_semana2/data/models/models.dart';
 import 'package:useacademy_semana2/domain/entities/entities.dart';
 import 'package:useacademy_semana2/domain/entities/movie.dart';
 import 'package:useacademy_semana2/domain/repositories/movie_repository.dart';
@@ -21,14 +22,15 @@ void main() {
   });
 
   const tActorList = [
-    Actor(id: '1', image: 'html://image.com', name: 'John Karter'),
-    Actor(id: '1', image: 'html://image.com', name: 'John Karter'),
+    ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
+    ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
   ];
 
   const testMovie = Movie(
     id: '1',
     title: 'Lost',
     image: 'html://lost.image.com',
+    plot: 'Filme massa',
     actorList: tActorList,
   );
 
@@ -41,7 +43,7 @@ void main() {
     expect(result, equals(const Right(testMovie)));
   });
 
-  test('should get a failure from the movie repository', () async {
+  test('should get a failure from repository', () async {
     // arrange
     when(mockMovieRepository.getMovie(any))
         .thenAnswer((_) async => Left(ServerFailure()));
