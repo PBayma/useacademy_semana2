@@ -6,22 +6,22 @@ import '../../core/usecases/usecase.dart';
 import '../entities/movie.dart';
 import '../repositories/movie_repository.dart';
 
-class GetMoviesList implements UseCase<List<Movie>, NoParams> {
+class GetMoviesList implements UseCase<List<Movie>, MovieListParams> {
   final MovieRepository repository;
 
   GetMoviesList({required this.repository});
 
   @override
-  Future<Either<Failure, List<Movie>>>? call(NoParams params) async {
-    return await repository.getMoviesList();
+  Future<Either<Failure, List<Movie>>>? call(MovieListParams params) async {
+    return await repository.getMoviesList(params.movieType);
   }
 }
 
-class Params extends Equatable {
-  final String movieId;
+class MovieListParams extends Equatable {
+  final String movieType;
 
-  const Params({required this.movieId});
+  const MovieListParams({required this.movieType});
 
   @override
-  List<Object> get props => [movieId];
+  List<Object> get props => [movieType];
 }
