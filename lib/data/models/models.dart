@@ -1,2 +1,2 @@
-export 'actor_model.dart';
-export 'movie_model.dart';
+export 'actor_data.dart';
+export 'movie_data.dart';

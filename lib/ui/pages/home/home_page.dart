@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:useacademy_semana2/ui/pages/home/widgets/header_movie_container.dart';
-import 'package:useacademy_semana2/ui/pages/widgets/actors_row.dart';
+import '../widgets/actors_row.dart';
 
+import 'widgets/header_movie_container.dart';
 import 'widgets/movie_container.dart';
 
 class HomePage extends StatelessWidget {
@@ -20,10 +20,9 @@ class HomePage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.7,
                   width: MediaQuery.of(context).size.width * 0.75,
-                  decoration: BoxDecoration(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -76,7 +75,7 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Column(
                   children: [
                     const HeaderMovieContainer(title: 'Para Você'),
