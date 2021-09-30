@@ -36,7 +36,7 @@ void main() {
 
       verify(
         mockClient.get(
-          Uri.parse('$apiUrl$apiToken$tMovieId'),
+          Uri.parse('https://imdb-api.com/pt/API/Title/k_51a2fpgu/tt1375666'),
           headers: {
             'content-type': 'application/json',
             'accept': 'application/json',
@@ -101,7 +101,7 @@ void main() {
       //assert
       verify(
         mockClient.get(
-          Uri.parse('$apiUrl$apiToken$keyWordTypeMovie'),
+          Uri.parse('https://imdb-api.com/API/Keyword/k_51a2fpgu/dramas'),
           headers: {
             'content-type': 'application/json',
             'accept': 'application/json',

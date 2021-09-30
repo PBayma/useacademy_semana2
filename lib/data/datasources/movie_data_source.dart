@@ -17,7 +17,7 @@ class MovieDataSourceImpl implements MovieDataSource {
   MovieDataSourceImpl({required this.client});
   @override
   Future<MovieModel> getMovie(String movieId) async {
-    final String url = '$apiUrl$apiToken$movieId';
+    final String url = '$apiMovieUrl$apiToken$movieId';
 
     try {
       final Map<String, dynamic> response =
@@ -30,7 +30,7 @@ class MovieDataSourceImpl implements MovieDataSource {
 
   @override
   Future<List<MovieModel>> getMoviesList(String keyWordTypeMovie) async {
-    final String url = '$apiUrl$apiToken$keyWordTypeMovie';
+    final String url = '$apiListUrl$apiToken$keyWordTypeMovie';
 
     try {
       final Map<String, dynamic> response =
