@@ -9,6 +9,9 @@ abstract class MovieDataSource {
 
   /// Throws a [ServerException] for all error codes.
   Future<List<MovieModel>> getMoviesList(String keyWordTypeMovie);
+
+  /// Throws a [ServerException] for all error codes.
+  Future<List<MovieModel>> getComingSoonMovies();
 }
 
 class MovieDataSourceImpl implements MovieDataSource {
@@ -31,6 +34,22 @@ class MovieDataSourceImpl implements MovieDataSource {
   @override
   Future<List<MovieModel>> getMoviesList(String keyWordTypeMovie) async {
     final String url = '$apiListUrl$apiToken$keyWordTypeMovie';
+
+    try {
+      final Map<String, dynamic> response =
+          await client.request(url: url, method: 'get');
+      final moviesList = (response['items'] as List)
+          .map((movie) => MovieModel.fromMap(movie))
+          .toList();
+      return moviesList;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<MovieModel>> getComingSoonMovies() async {
+    const String url = '$apiComingSoonUrl$apiToken';
 
     try {
       final Map<String, dynamic> response =

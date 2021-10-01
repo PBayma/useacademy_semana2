@@ -25,12 +25,18 @@ void main() {
     ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
   ];
 
+  const tStarActorList = [
+    StarActorModel(id: '1', name: 'John Karter'),
+    StarActorModel(id: '2', name: 'John Clovan'),
+  ];
+
   const tSecondMovie = MovieModel(
     id: '2',
     title: 'Baby Driver',
     image: 'https://imdb.image',
     plot: 'Assalto ao banco',
     actorList: tActorList,
+    starList: tStarActorList,
   );
 
   const tMovie = MovieModel(
@@ -39,6 +45,7 @@ void main() {
     image: 'https://imdb.image',
     plot: 'Pessoal se perdeu em uma ilha',
     actorList: tActorList,
+    starList: tStarActorList,
   );
 
   const tMovieId = '1';
@@ -97,6 +104,37 @@ void main() {
 
       //assert
       expect(result, equals(Left(ServerFailure())));
+    });
+
+    group('coming soon movies', () {
+      test(
+          'should return a right value with a movie list, when the request is sucess',
+          () async {
+        // arrange
+        final movieList = [tMovie, tSecondMovie];
+
+        when(mockDataSource.getComingSoonMovies())
+            .thenAnswer((_) async => movieList);
+
+        //act
+        final result = await repositoryImpl.getMoviesComingSoon();
+
+        //assert
+        expect(result, equals(Right(movieList)));
+      });
+
+      test(
+          'should return a left value with server failure, when the request of the list throws a exception',
+          () async {
+        // arrange
+        when(mockDataSource.getComingSoonMovies()).thenThrow(ServerException());
+
+        //act
+        final result = await repositoryImpl.getMoviesComingSoon();
+
+        //assert
+        expect(result, equals(Left(ServerFailure())));
+      });
     });
   });
 }

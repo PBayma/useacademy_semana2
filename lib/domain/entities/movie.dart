@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+
 import '../../data/models/models.dart';
+import 'entities.dart';
 
 class Movie extends Equatable {
   final String id;
@@ -7,6 +9,7 @@ class Movie extends Equatable {
   final String image;
   final String plot;
   final List<ActorModel> actorList;
+  final List<StarActor> starList;
 
   const Movie({
     required this.id,
@@ -14,6 +17,7 @@ class Movie extends Equatable {
     required this.image,
     required this.plot,
     required this.actorList,
+    required this.starList,
   });
 
   @override

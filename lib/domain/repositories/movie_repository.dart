@@ -5,5 +5,6 @@ import '../entities/movie.dart';
 
 abstract class MovieRepository {
   Future<Either<Failure, List<Movie>>> getMoviesList(String movieType);
+  Future<Either<Failure, List<Movie>>> getMoviesComingSoon();
   Future<Either<Failure, Movie>> getMovie(String movieId);
 }

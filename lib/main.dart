@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'data/datasources/movie_data_source.dart';
 import 'data/repositories/movie_repository_impl.dart';
 import 'domain/entities/category_arguments.dart';
+import 'domain/usecases/get_coming_soon_movies.dart';
 import 'domain/usecases/get_movie.dart';
 import 'domain/usecases/get_movies_list.dart';
 import 'infra/http/http_adapter.dart';
@@ -34,6 +35,15 @@ class MyApp extends StatelessWidget {
           '/': (context) => HomePage(
                 presenter: StreamHomePresenter(
                   getMoviesList: GetMoviesList(
+                    repository: MovieRepositoryImpl(
+                      movieDataSource: MovieDataSourceImpl(
+                        client: HttpAdapter(
+                          client: Client(),
+                        ),
+                      ),
+                    ),
+                  ),
+                  getComingSoonMoviesList: GetComingSoonMovies(
                     repository: MovieRepositoryImpl(
                       movieDataSource: MovieDataSourceImpl(
                         client: HttpAdapter(

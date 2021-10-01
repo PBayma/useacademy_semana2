@@ -40,5 +40,10 @@ class MockMovieDataSource extends _i1.Mock implements _i3.MovieDataSource {
                   Future<List<_i2.MovieModel>>.value(<_i2.MovieModel>[]))
           as _i4.Future<List<_i2.MovieModel>>);
   @override
+  _i4.Future<List<_i2.MovieModel>> getComingSoonMovies() => (super.noSuchMethod(
+          Invocation.method(#getComingSoonMovies, []),
+          returnValue: Future<List<_i2.MovieModel>>.value(<_i2.MovieModel>[]))
+      as _i4.Future<List<_i2.MovieModel>>);
+  @override
   String toString() => super.toString();
 }

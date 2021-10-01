@@ -21,7 +21,6 @@ class MoviePage extends StatefulWidget {
 class _MoviePageState extends State<MoviePage> {
   @override
   void initState() {
-    debugPrint(widget.movieId);
     widget.presenter.loadMovie(widget.movieId);
     super.initState();
   }

@@ -28,4 +28,13 @@ class MovieRepositoryImpl extends MovieRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, List<Movie>>> getMoviesComingSoon() async {
+    try {
+      return Right(await movieDataSource.getComingSoonMovies());
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

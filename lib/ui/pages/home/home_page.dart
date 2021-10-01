@@ -1,4 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:useacademy_semana2/ui/pages/home/widgets/carousel_slider_movie.dart';
+import 'package:useacademy_semana2/ui/pages/home/widgets/stars_row.dart';
 
 import '../../../domain/entities/category_arguments.dart';
 import '../../../domain/entities/entities.dart';
@@ -21,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     widget.presenter.loadToYouMovies();
     widget.presenter.loadArsenalMovies();
     widget.presenter.loadAmericaMovies();
+    widget.presenter.comingSoonMovies();
 
     super.initState();
   }
@@ -38,61 +43,129 @@ class _HomePageState extends State<HomePage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
-                  width: MediaQuery.of(context).size.width * 0.75,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        'Lançamento',
-                        style: TextStyle(
-                          fontFamily:
-                              Theme.of(context).textTheme.headline1?.fontFamily,
-                          fontSize:
-                              Theme.of(context).textTheme.headline3?.fontSize,
-                          color: Theme.of(context).textTheme.headline1?.color,
-                        ),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.5,
-                        width: MediaQuery.of(context).size.width * 0.55,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            'https://m.media-amazon.com/images/M/MV5BNzhlY2E5NDUtYjJjYy00ODg3LWFkZWQtYTVmMzU4ZWZmOWJkXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_Ratio0.6791_AL_.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            'Lost',
-                            style: TextStyle(
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .headline3
-                                  ?.fontFamily,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .headline3
-                                  ?.fontSize,
-                              color:
-                                  Theme.of(context).textTheme.headline3?.color,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const ActorsRow(
-                            firstActor: 'Jorge Garcia',
-                            secondActor: 'Josh Holloway',
-                            thirdActor: 'Yunjin Kin',
-                          ),
-                        ],
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(
+                    'Lançamento',
+                    style: TextStyle(
+                      fontFamily:
+                          Theme.of(context).textTheme.headline1?.fontFamily,
+                      fontSize: Theme.of(context).textTheme.headline3?.fontSize,
+                      color: Theme.of(context).textTheme.headline1?.color,
+                    ),
                   ),
                 ),
+                StreamBuilder<List<Movie>>(
+                  stream: widget.presenter.comingSoonMoviesStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return CarouselSlider(
+                        items: snapshot.data!.map((movie) {
+                          return SizedBox(
+                            width: MediaQuery.of(context).size.height * 0.37,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.48,
+                                    child: CachedNetworkImage(
+                                      imageUrl: movie.image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  movie.title,
+                                  style: TextStyle(
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .headline3
+                                        ?.fontFamily,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headline3
+                                        ?.fontSize,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .headline3
+                                        ?.color,
+                                  ),
+                                ),
+                                StarsRow(
+                                  firstStarActor: movie.starList[0].name,
+                                  secondStarActor: movie.starList[1].name,
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        options: CarouselOptions(
+                          height: MediaQuery.of(context).size.height * 0.6,
+                        ),
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height * 0.7,
+                //   width: MediaQuery.of(context).size.width * 0.75,
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //     children: [
+                //       Text(
+                //         'Lançamento',
+                //         style: TextStyle(
+                //           fontFamily:
+                //               Theme.of(context).textTheme.headline1?.fontFamily,
+                //           fontSize:
+                //               Theme.of(context).textTheme.headline3?.fontSize,
+                //           color: Theme.of(context).textTheme.headline1?.color,
+                //         ),
+                //       ),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height * 0.5,
+                //   width: MediaQuery.of(context).size.width * 0.55,
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(10),
+                //     child: Image.network(
+                //       'https://m.media-amazon.com/images/M/MV5BNzhlY2E5NDUtYjJjYy00ODg3LWFkZWQtYTVmMzU4ZWZmOWJkXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_Ratio0.6791_AL_.jpg',
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                //       ),
+                //       Column(
+                //         children: [
+                //           Text(
+                //             'Lost',
+                //             style: TextStyle(
+                //               fontFamily: Theme.of(context)
+                //                   .textTheme
+                //                   .headline3
+                //                   ?.fontFamily,
+                //               fontSize: Theme.of(context)
+                //                   .textTheme
+                //                   .headline3
+                //                   ?.fontSize,
+                //               color:
+                //                   Theme.of(context).textTheme.headline3?.color,
+                //             ),
+                //           ),
+                //           const SizedBox(height: 10),
+                //           const ActorsRow(
+                //             firstActor: 'Jorge Garcia',
+                //             secondActor: 'Josh Holloway',
+                //             thirdActor: 'Yunjin Kin',
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 const SizedBox(height: 20),
                 StreamBuilder<List<Movie>>(
                   stream: widget.presenter.toYouMoviesStream,

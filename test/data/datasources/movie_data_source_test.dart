@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
@@ -141,6 +142,68 @@ void main() {
 
       //act
       final result = dataSource.getMovie(tMovieId);
+
+      //assert
+      expect(result, throwsA(isA<ServerException>()));
+    });
+  });
+
+  group('get coming soon movies', () {
+    final String tStarsBodyList = fixture('comingSoonMovies.json');
+    final String tStarActorBody = fixture('comingSoon.json');
+
+    test('should perform a GET request on a URL', () async {
+      // arrange
+
+      when(mockClient.get(any, headers: anyNamed('headers')))
+          .thenAnswer((_) async => Response(tStarsBodyList, 200));
+
+      //act
+      await dataSource.getComingSoonMovies();
+
+      //assert
+      verify(
+        mockClient.get(
+          Uri.parse('https://imdb-api.com/en/API/ComingSoon/k_51a2fpgu/'),
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+          },
+        ),
+      );
+    });
+
+    test('should return response code 200 and get a valid MovieList', () async {
+      // arrange
+      when(mockClient.get(any, headers: anyNamed('headers')))
+          .thenAnswer((_) async => Response(tStarsBodyList, 200));
+      final tMovieModel = MovieModel.fromJson(tStarActorBody);
+
+      //act
+      final result = await dataSource.getComingSoonMovies();
+
+      //assert
+      expect(result, equals([tMovieModel]));
+    });
+
+    test('should throws a ServerException when status code is 4xx', () async {
+      // arrange
+      when(mockClient.get(any, headers: anyNamed('headers')))
+          .thenAnswer((_) async => Response(tStarsBodyList, 402));
+
+      //act
+      final result = dataSource.getComingSoonMovies();
+
+      //assert
+      expect(result, throwsA(isA<ServerException>()));
+    });
+    test('should throws a ServerException when status code is 5xx', () async {
+      // arrange
+      when(mockClient.get(any, headers: anyNamed('headers')))
+          .thenAnswer((_) async => Response(tStarsBodyList, 500));
+
+      //act
+      final result = dataSource.getComingSoonMovies();
 
       //assert
       expect(result, throwsA(isA<ServerException>()));
