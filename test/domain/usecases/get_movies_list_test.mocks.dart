@@ -38,6 +38,12 @@ class MockMovieRepository extends _i1.Mock implements _i3.MovieRepository {
               _FakeEither_0<_i5.Failure, List<_i6.Movie>>())) as _i4
           .Future<_i2.Either<_i5.Failure, List<_i6.Movie>>>);
   @override
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Movie>>> getMoviesComingSoon() =>
+      (super.noSuchMethod(Invocation.method(#getMoviesComingSoon, []),
+          returnValue: Future<_i2.Either<_i5.Failure, List<_i6.Movie>>>.value(
+              _FakeEither_0<_i5.Failure, List<_i6.Movie>>())) as _i4
+          .Future<_i2.Either<_i5.Failure, List<_i6.Movie>>>);
+  @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Movie>> getMovie(String? movieId) =>
       (super.noSuchMethod(Invocation.method(#getMovie, [movieId]),
               returnValue: Future<_i2.Either<_i5.Failure, _i6.Movie>>.value(

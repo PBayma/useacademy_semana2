@@ -4,6 +4,8 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:useacademy_semana2/core/error/failures.dart';
 import 'package:useacademy_semana2/data/models/models.dart';
+import 'package:useacademy_semana2/data/models/star_actor_data.dart';
+import 'package:useacademy_semana2/domain/entities/entities.dart';
 import 'package:useacademy_semana2/domain/entities/movie.dart';
 import 'package:useacademy_semana2/domain/repositories/movie_repository.dart';
 import 'package:useacademy_semana2/domain/usecases/get_movies_list.dart';
@@ -22,7 +24,11 @@ void main() {
 
   const tActorList = [
     ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
-    ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
+    ActorModel(id: '1', image: 'html://image.com', name: 'John Clovan'),
+  ];
+  const tStarActorList = [
+    StarActorModel(id: '1', name: 'John Karter'),
+    StarActorModel(id: '2', name: 'John Clovan'),
   ];
 
   const tMoviesList = [
@@ -32,6 +38,7 @@ void main() {
       image: 'html://lost.image.com',
       plot: 'Filme show',
       actorList: tActorList,
+      starList: tStarActorList,
     ),
     Movie(
       id: '2',
@@ -39,6 +46,7 @@ void main() {
       image: 'html://babydriver.image.com',
       plot: 'Filme show demais',
       actorList: tActorList,
+      starList: tStarActorList,
     )
   ];
 

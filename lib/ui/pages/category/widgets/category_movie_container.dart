@@ -35,7 +35,7 @@ class CategoryMovieContainer extends StatelessWidget {
                   color: Colors.white,
                 ),
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 1,
               ),
             )
           ],

@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:useacademy_semana2/core/error/failures.dart';
 import 'package:useacademy_semana2/data/models/models.dart';
+import 'package:useacademy_semana2/data/models/star_actor_data.dart';
 import 'package:useacademy_semana2/domain/entities/entities.dart';
 import 'package:useacademy_semana2/domain/entities/movie.dart';
 import 'package:useacademy_semana2/domain/repositories/movie_repository.dart';
@@ -25,6 +26,10 @@ void main() {
     ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
     ActorModel(id: '1', image: 'html://image.com', name: 'John Karter'),
   ];
+  const tStarActorList = [
+    StarActorModel(id: '1', name: 'John Karter'),
+    StarActorModel(id: '2', name: 'John Clovan'),
+  ];
 
   const testMovie = Movie(
     id: '1',
@@ -32,6 +37,7 @@ void main() {
     image: 'html://lost.image.com',
     plot: 'Filme massa',
     actorList: tActorList,
+    starList: tStarActorList,
   );
 
   test('should get a movie from the movie repository', () async {

@@ -5,12 +5,12 @@ import '../../fixtures/fixture_reader.dart';
 
 void main() {
   const tMovieModel = MovieModel(
-    id: 'tt14561924',
-    title: 'Ourselves',
-    image: 'https://imdb-api.com/images.jpg',
-    plot: '',
-    actorList: [],
-  );
+      id: 'tt14561924',
+      title: 'Ourselves',
+      image: 'https://imdb-api.com/images.jpg',
+      plot: '',
+      actorList: [],
+      starList: []);
   test('should return a valid movie when some camps are null', () async {
     final result = MovieModel.fromJson(fixture('simpleMovieData.json'));
 
@@ -34,6 +34,16 @@ void main() {
         ActorModel(
           id: 'nm0330687',
           image: 'https://imdb-api.com/images.jpg',
+          name: 'Joseph Gordon-Levitt',
+        ),
+      ],
+      starList: [
+        StarActorModel(
+          id: 'nm0000138',
+          name: 'Leonardo DiCaprio',
+        ),
+        StarActorModel(
+          id: 'nm0330687',
           name: 'Joseph Gordon-Levitt',
         ),
       ],
