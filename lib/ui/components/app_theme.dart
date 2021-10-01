@@ -55,9 +55,8 @@ mixin AppTheme {
       color: const Color(0xFFFFFFFF),
     ),
     headline2: GoogleFonts.lato(
-      fontSize: 58,
+      fontSize: 26,
       fontWeight: _light,
-      letterSpacing: -0.5,
       color: const Color(0xFFFFFFFF),
     ),
     headline3: GoogleFonts.lato(
@@ -77,8 +76,8 @@ mixin AppTheme {
     ),
     subtitle1: GoogleFonts.lato(
       fontSize: 15,
-      fontWeight: _regular,
-      letterSpacing: 0.15,
+      fontWeight: _light,
+      color: const Color(0xFFFFFFFF),
     ),
     subtitle2: GoogleFonts.poppins(
       fontSize: 13,

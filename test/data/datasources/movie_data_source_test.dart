@@ -6,7 +6,6 @@ import 'package:useacademy_semana2/core/error/exceptions.dart';
 import 'package:useacademy_semana2/data/datasources/movie_data_source.dart';
 import 'package:useacademy_semana2/data/models/models.dart';
 import 'package:useacademy_semana2/infra/http/http_adapter.dart';
-import 'package:useacademy_semana2/shared/api_url.dart';
 
 import '../../fixtures/fixture_reader.dart';
 import 'movie_data_source_test.mocks.dart';
