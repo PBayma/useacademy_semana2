@@ -12,7 +12,7 @@ class GetMovie implements UseCase<Movie, Params> {
   GetMovie({required this.repository});
 
   @override
-  Future<Either<Failure, Movie>>? call(Params params) async {
+  Future<Either<Failure, Movie>> call(Params params) async {
     return await repository.getMovie(params.movieId);
   }
 }
