@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 class HeaderMovieContainer extends StatelessWidget {
   final String title;
-  const HeaderMovieContainer({Key? key, required this.title}) : super(key: key);
+  final Function() onTap;
+  const HeaderMovieContainer(
+      {Key? key, required this.title, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class HeaderMovieContainer extends StatelessWidget {
                 fontSize: Theme.of(context).textTheme.button?.fontSize,
               ),
             ),
-            onTap: () {},
+            onTap: onTap,
           )
         ],
       ),

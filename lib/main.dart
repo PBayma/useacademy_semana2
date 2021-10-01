@@ -3,12 +3,14 @@ import 'package:http/http.dart';
 
 import 'data/datasources/movie_data_source.dart';
 import 'data/repositories/movie_repository_impl.dart';
+import 'domain/entities/category_arguments.dart';
 import 'domain/usecases/get_movie.dart';
 import 'domain/usecases/get_movies_list.dart';
 import 'infra/http/http_adapter.dart';
 import 'presentation/presenters/stream_home_presenter.dart';
 import 'presentation/presenters/stream_movie_presenter.dart';
 import 'ui/components/app_theme.dart';
+import 'ui/pages/category/category_page.dart';
 import 'ui/pages/home/home_page.dart';
 import 'ui/pages/movie/movie_page.dart';
 
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightThemeData,
       onGenerateRoute: (RouteSettings settings) {
         var routes = <String, WidgetBuilder>{
+          '/category': (context) => CategoryPage(
+                categoryArguments: settings.arguments as CategoryArguments,
+              ),
           '/': (context) => HomePage(
                 presenter: StreamHomePresenter(
                   getMoviesList: GetMoviesList(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/entities/category_arguments.dart';
 import '../../../domain/entities/entities.dart';
 import '../widgets/actors_row.dart';
 import 'home_presenter.dart';
@@ -93,16 +94,27 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Column(
-                  children: [
-                    const HeaderMovieContainer(title: 'Para Você'),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.45,
-                      child: StreamBuilder<List<Movie>>(
-                        stream: widget.presenter.toYouMoviesStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return ListView.builder(
+                StreamBuilder<List<Movie>>(
+                  stream: widget.presenter.toYouMoviesStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return Column(
+                        children: [
+                          HeaderMovieContainer(
+                            title: 'Para Você',
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                '/category',
+                                arguments: CategoryArguments(
+                                  category: 'Para Você',
+                                  moviesList: snapshot.data!,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.45,
+                            child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: 10,
                                 itemBuilder: (context, index) {
@@ -116,28 +128,37 @@ class _HomePageState extends State<HomePage> {
                                       );
                                     },
                                   );
-                                });
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                                }),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
                 ),
                 const SizedBox(height: 20),
-                Column(
-                  children: [
-                    const HeaderMovieContainer(title: 'Ação'),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.45,
-                      child: StreamBuilder<List<Movie>>(
-                        stream: widget.presenter.arsenalMoviesStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return ListView.builder(
+                StreamBuilder<List<Movie>>(
+                  stream: widget.presenter.arsenalMoviesStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return Column(
+                        children: [
+                          HeaderMovieContainer(
+                            title: 'Ação',
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                '/category',
+                                arguments: CategoryArguments(
+                                  category: 'Ação',
+                                  moviesList: snapshot.data!,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.45,
+                            child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: 10,
                                 itemBuilder: (context, index) {
@@ -151,28 +172,37 @@ class _HomePageState extends State<HomePage> {
                                       );
                                     },
                                   );
-                                });
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                                }),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
                 ),
                 const SizedBox(height: 20),
-                Column(
-                  children: [
-                    const HeaderMovieContainer(title: 'Americanos'),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.45,
-                      child: StreamBuilder<List<Movie>>(
-                        stream: widget.presenter.americaMovieStream,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-                            return ListView.builder(
+                StreamBuilder<List<Movie>>(
+                  stream: widget.presenter.americaMovieStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                      return Column(
+                        children: [
+                          HeaderMovieContainer(
+                            title: 'Americanos',
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                '/category',
+                                arguments: CategoryArguments(
+                                  category: 'Americanos',
+                                  moviesList: snapshot.data!,
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.45,
+                            child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: 10,
                                 itemBuilder: (context, index) {
@@ -186,16 +216,14 @@ class _HomePageState extends State<HomePage> {
                                       );
                                     },
                                   );
-                                });
-                          } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                  ],
+                                }),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  },
                 ),
               ],
             ),
