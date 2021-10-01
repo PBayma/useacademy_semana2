@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
-import '../widgets/actors_row.dart';
 
+import '../../../domain/entities/entities.dart';
+import '../widgets/actors_row.dart';
+import 'home_presenter.dart';
 import 'widgets/header_movie_container.dart';
 import 'widgets/movie_container.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  final HomePresenter presenter;
+  const HomePage({Key? key, required this.presenter}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    widget.presenter.loadToYouMovies();
+    widget.presenter.loadArsenalMovies();
+    widget.presenter.loadAmericaMovies();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,25 +98,31 @@ class HomePage extends StatelessWidget {
                     const HeaderMovieContainer(title: 'Para Você'),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.45,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          MovieContainer(
-                              imageUrl:
-                                  'https://m.media-amazon.com/images/M/MV5BYTM3ZTllNzItNTNmOS00NzJiLTg1MWMtMjMxNDc0NmJhODU5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_Ratio0.6800_AL_.jpg',
-                              movieTitle: 'Kingsman',
-                              onTap: () {}),
-                          MovieContainer(
-                              imageUrl:
-                                  'https://m.media-amazon.com/images/M/MV5BMDg2YzI0ODctYjliMy00NTU0LTkxODYtYTNkNjQwMzVmOTcxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_Ratio0.6800_AL_.jpg',
-                              movieTitle: 'John Wick 3',
-                              onTap: () {}),
-                          MovieContainer(
-                              imageUrl:
-                                  'https://m.media-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_Ratio0.6800_AL_.jpg',
-                              movieTitle: 'Baby Driver',
-                              onTap: () {}),
-                        ],
+                      child: StreamBuilder<List<Movie>>(
+                        stream: widget.presenter.toYouMoviesStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return MovieContainer(
+                                    imageUrl: snapshot.data![index].image,
+                                    movieTitle: snapshot.data![index].title,
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        '/movie',
+                                        arguments: snapshot.data![index].id,
+                                      );
+                                    },
+                                  );
+                                });
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -110,25 +133,66 @@ class HomePage extends StatelessWidget {
                     const HeaderMovieContainer(title: 'Ação'),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.45,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          MovieContainer(
-                              imageUrl:
-                                  'https://m.media-amazon.com/images/M/MV5BYTM3ZTllNzItNTNmOS00NzJiLTg1MWMtMjMxNDc0NmJhODU5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_Ratio0.6800_AL_.jpg',
-                              movieTitle: 'Kingsman',
-                              onTap: () {}),
-                          MovieContainer(
-                              imageUrl:
-                                  'https://m.media-amazon.com/images/M/MV5BMDg2YzI0ODctYjliMy00NTU0LTkxODYtYTNkNjQwMzVmOTcxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_Ratio0.6800_AL_.jpg',
-                              movieTitle: 'John Wick 3',
-                              onTap: () {}),
-                          MovieContainer(
-                              imageUrl:
-                                  'https://m.media-amazon.com/images/M/MV5BMjM3MjQ1MzkxNl5BMl5BanBnXkFtZTgwODk1ODgyMjI@._V1_Ratio0.6800_AL_.jpg',
-                              movieTitle: 'Baby Driver',
-                              onTap: () {}),
-                        ],
+                      child: StreamBuilder<List<Movie>>(
+                        stream: widget.presenter.arsenalMoviesStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return MovieContainer(
+                                    imageUrl: snapshot.data![index].image,
+                                    movieTitle: snapshot.data![index].title,
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        '/movie',
+                                        arguments: snapshot.data![index].id,
+                                      );
+                                    },
+                                  );
+                                });
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  children: [
+                    const HeaderMovieContainer(title: 'Americanos'),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      child: StreamBuilder<List<Movie>>(
+                        stream: widget.presenter.americaMovieStream,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 10,
+                                itemBuilder: (context, index) {
+                                  return MovieContainer(
+                                    imageUrl: snapshot.data![index].image,
+                                    movieTitle: snapshot.data![index].title,
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                        '/movie',
+                                        arguments: snapshot.data![index].id,
+                                      );
+                                    },
+                                  );
+                                });
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],

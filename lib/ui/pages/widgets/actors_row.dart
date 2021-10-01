@@ -47,6 +47,7 @@ class ActorsRow extends StatelessWidget {
             fontSize: Theme.of(context).textTheme.headline5?.fontSize,
             color: Theme.of(context).textTheme.headline5?.color,
           ),
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class MovieContainer extends StatelessWidget {
@@ -22,16 +23,20 @@ class MovieContainer extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             height: MediaQuery.of(context).size.height * 0.35,
             child: ClipRRect(
-              child: Image.network(imageUrl),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+              ),
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
+            width: MediaQuery.of(context).size.width * 0.3,
             child: Text(
               movieTitle,
               style: const TextStyle(
                 color: Colors.white,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           )
